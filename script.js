@@ -23,7 +23,9 @@ function startGame() {
     gameArea.start();
 
     drawBackgroundImage("bg.png")
-    drawCheese()
+    sleep(100).then(() => {
+        drawCheese()
+    })
 }
 
 function drawCheese() {
@@ -32,6 +34,7 @@ function drawCheese() {
     let dateFrom = 1684746000000
     let dateTo = 1687424400000
     let dateNow = Date.now()
+    
 
 
     let totalTime = dateTo - dateFrom
