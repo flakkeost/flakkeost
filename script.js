@@ -12,7 +12,8 @@ var settings = {
     screenSize: {
         w: 2400,
         h: 1350
-    }
+    },
+    FPS: 1
 }
 
 var inventory = {}
@@ -21,11 +22,20 @@ let currentRoom = "vanastue"
 
 function startGame() {
     gameArea.start();
+    requestAnimationFrame(tick)
+}
 
+async function tick() {
+    update()
+
+    console.log("tick");
+    await sleep(1000 / settings.FPS)
+    requestAnimationFrame(tick)
+}
+
+function update() {
     drawBackgroundImage("bg.png")
-    sleep(100).then(() => {
-        drawCheese()
-    })
+    drawCheese()
 }
 
 function drawCheese() {
@@ -35,7 +45,12 @@ function drawCheese() {
     let dateTo = 1687424400000
     let dateNow = Date.now()
     
+    if (dateNow > dateTo) {
+        drawObject(gameArea.ctx, 0.97, 0.8, 0.07, "ostdoed.png")
+        return
+    }
 
+    console.log(dateNow);
 
     let totalTime = dateTo - dateFrom
     let timeLeft = totalTime - (dateTo - dateNow)
